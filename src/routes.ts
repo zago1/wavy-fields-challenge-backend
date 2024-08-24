@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import { createUserController } from "./useCases/CreateUser";
 import { deleteUserController } from "./useCases/DeleteUser";
+import { updateUserNameController } from "./useCases/UpdateUserName";
 
 const router = Router();
 
@@ -14,6 +15,10 @@ router.post('/user', (request: Request, response: Response) => {
 
 router.delete('/user/:id', (request: Request, response: Response) => {
   return deleteUserController.handle(request, response);
+});
+
+router.patch('/user/name/:id', (request: Request, response: Response) => {
+  return updateUserNameController.handle(request, response);
 });
 
 
