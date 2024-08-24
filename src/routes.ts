@@ -5,12 +5,15 @@ import { updateUserNameController } from "./useCases/UpdateUserName";
 import { updateUserPasswordController } from "./useCases/UpdateUserPassword";
 import { loginController } from "./useCases/Login";
 import { createTaskController } from "./useCases/CreateTask";
+import { deleteTaskController } from "./useCases/DeleteTask";
 
 const router = Router();
 
 router.get('/', (request: Request, response: Response) => {
   return response.status(200).send("OK");
 });
+
+// user routes
 
 router.post('/login', (request: Request, response: Response) => {
   return loginController.handle(request, response);
@@ -32,8 +35,14 @@ router.patch('/user/password/:id', (request: Request, response: Response) => {
   return updateUserPasswordController.handle(request, response);
 });
 
+// task routes
+
 router.post('/task', (request: Request, response: Response) => {
   return createTaskController.handle(request, response);
+});
+
+router.delete('/task/:id', (request: Request, response: Response) => {
+  return deleteTaskController.handle(request, response);
 });
 
 
