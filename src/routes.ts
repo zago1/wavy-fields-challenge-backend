@@ -4,6 +4,7 @@ import { deleteUserController } from "./useCases/DeleteUser";
 import { updateUserNameController } from "./useCases/UpdateUserName";
 import { updateUserPasswordController } from "./useCases/UpdateUserPassword";
 import { loginController } from "./useCases/Login";
+import { createTaskController } from "./useCases/CreateTask";
 
 const router = Router();
 
@@ -29,6 +30,10 @@ router.patch('/user/name/:id', (request: Request, response: Response) => {
 
 router.patch('/user/password/:id', (request: Request, response: Response) => {
   return updateUserPasswordController.handle(request, response);
+});
+
+router.post('/task', (request: Request, response: Response) => {
+  return createTaskController.handle(request, response);
 });
 
 
