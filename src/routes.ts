@@ -3,11 +3,16 @@ import { createUserController } from "./useCases/CreateUser";
 import { deleteUserController } from "./useCases/DeleteUser";
 import { updateUserNameController } from "./useCases/UpdateUserName";
 import { updateUserPasswordController } from "./useCases/UpdateUserPassword";
+import { loginController } from "./useCases/Login";
 
 const router = Router();
 
 router.get('/', (request: Request, response: Response) => {
   return response.status(200).send("OK");
+});
+
+router.post('/login', (request: Request, response: Response) => {
+  return loginController.handle(request, response);
 });
 
 router.post('/user', (request: Request, response: Response) => {
