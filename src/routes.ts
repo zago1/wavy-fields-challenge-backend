@@ -6,6 +6,7 @@ import { updateUserPasswordController } from "./useCases/UpdateUserPassword";
 import { loginController } from "./useCases/Login";
 import { createTaskController } from "./useCases/CreateTask";
 import { deleteTaskController } from "./useCases/DeleteTask";
+import { listTasksByUserController } from "./useCases/ListTasksByUser";
 
 const router = Router();
 
@@ -44,6 +45,11 @@ router.post('/task', (request: Request, response: Response) => {
 router.delete('/task/:id', (request: Request, response: Response) => {
   return deleteTaskController.handle(request, response);
 });
+
+router.get('/task/list/:userId', (request: Request, response: Response) => {
+  return listTasksByUserController.handle(request, response);
+});
+
 
 
 export { router };
