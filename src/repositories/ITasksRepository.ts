@@ -1,5 +1,5 @@
 import { Task } from "../entities/Task";
-interface IPaginatedResponse<T> {
+export interface IPaginatedResponse<T> {
   metadata: { totalRegisters: number };
   data: T
 }
