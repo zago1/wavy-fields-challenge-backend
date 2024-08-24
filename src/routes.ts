@@ -7,6 +7,7 @@ import { loginController } from "./useCases/Login";
 import { createTaskController } from "./useCases/CreateTask";
 import { deleteTaskController } from "./useCases/DeleteTask";
 import { listTasksByUserController } from "./useCases/ListTasksByUser";
+import { updateTaskController } from "./useCases/UpdateTask";
 
 const router = Router();
 
@@ -50,6 +51,9 @@ router.get('/task/list/:userId', (request: Request, response: Response) => {
   return listTasksByUserController.handle(request, response);
 });
 
+router.patch('/task/:id', (request: Request, response: Response) => {
+  return updateTaskController.handle(request, response);
+});
 
 
 export { router };
