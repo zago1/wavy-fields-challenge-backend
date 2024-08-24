@@ -29,8 +29,12 @@ export class PostgresUserRepository implements IUsersRepository {
     return !!user;
   }
 
-  private createNewUser(name: string, email: string, password: string, id?: string) {
-    return new User({ email, name, password }, id);
+  private createNewUser(id: string, name: string, email: string) {
+    return new User({
+      email,
+      name,
+      password: undefined 
+    }, id);
   }
 
   async create(name: string, email: string, password: string): Promise<User> {
@@ -46,7 +50,7 @@ export class PostgresUserRepository implements IUsersRepository {
       }
     });
 
-    return this.createNewUser(user.name, user.email, '', user.id);
+    return this.createNewUser(user.id, user.name, user.email);
 
   }
   async login(email: string, password: string): Promise<User> {
@@ -61,7 +65,7 @@ export class PostgresUserRepository implements IUsersRepository {
       throw new Error("User doesn't exist!");
     }
 
-    return this.createNewUser(user.name, user.email, '', user.id);
+    return this.createNewUser(user.id, user.name, user.email);
   }
 
   async updateName(name: string, id: string): Promise<User> {
@@ -70,7 +74,7 @@ export class PostgresUserRepository implements IUsersRepository {
       where: { id }
     });
 
-    return this.createNewUser(user.name, user.email, '', user.id);
+    return this.createNewUser(user.id, user.name, user.email);
   }
 
   async updatePassword(oldPassword: string, newPassword: string, id: string): Promise<void> {
