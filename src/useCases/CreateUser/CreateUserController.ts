@@ -11,7 +11,7 @@ export class CreateUserController {
       const { name, email, password } = request.body;
       const user = await this.createUserUseCase.execute(name, email, password);
 
-      return response.status(200).send({ user });
+      return response.status(200).send({ ...user, password: undefined });
     } catch (error) {
       return response.sendStatus(500);
     }
