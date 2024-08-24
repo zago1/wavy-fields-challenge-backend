@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ListTasksByUserUseCase } from "./ListTasksByUserUseCase";
+import { handleError } from "../../utils";
 
 export class ListTasksByUserController {
   constructor(
@@ -22,7 +23,7 @@ export class ListTasksByUserController {
 
       return response.status(200).send(data);
     } catch (error) {
-      return response.sendStatus(500);
+      return handleError(error, response);
     }
   }
 }

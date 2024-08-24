@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { CreateUserUseCase } from "./CreateUserUseCase";
+import { BaseError } from "../../utils/errors/BaseError";
+import { handleError } from "../../utils";
 
 export class CreateUserController {
   constructor(
@@ -13,7 +15,7 @@ export class CreateUserController {
 
       return response.status(200).send(user);
     } catch (error) {
-      return response.sendStatus(500);
+      return handleError(error, response);
     }
   }
 }

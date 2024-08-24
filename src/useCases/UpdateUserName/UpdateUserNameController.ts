@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { UpdateUserNameUseCase } from "./UpdateUserNameUseCase";
+import { handleError } from "../../utils";
 
 export class UpdateUserNameController {
   constructor(
@@ -15,7 +16,7 @@ export class UpdateUserNameController {
 
       return response.status(200).send(user);
     } catch (error) {
-      return response.sendStatus(500);
+      return handleError(error, response);
     }
   }
 }

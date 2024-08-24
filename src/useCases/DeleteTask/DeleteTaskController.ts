@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { DeleteTaskUseCase } from "./DeleteTaskUseCase";
+import { handleError } from "../../utils";
 
 export class DeleteTaskController {
   constructor(
@@ -13,7 +14,7 @@ export class DeleteTaskController {
 
       return response.sendStatus(200);
     } catch (error) {
-      return response.sendStatus(500);
+      return handleError(error, response);
     }
   }
 }

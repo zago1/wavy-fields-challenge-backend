@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { UpdateTaskUseCase } from "./UpdateTaskUseCase";
+import { handleError } from "../../utils";
 
 export class UpdateTaskController {
   constructor(
@@ -14,7 +15,7 @@ export class UpdateTaskController {
 
       return response.status(200).send(task);
     } catch (error) {
-      return response.sendStatus(500);
+      return handleError(error, response);
     }
   }
 }

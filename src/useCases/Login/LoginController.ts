@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { LoginUseCase } from "./LoginUseCase";
+import { handleError } from "../../utils";
 
 export class LoginController {
   constructor(
@@ -13,8 +14,7 @@ export class LoginController {
 
       return response.status(200).send({ ...user, password: undefined });
     } catch (error) {
-      console.log('[err]', error);
-      return response.sendStatus(500);
+      return handleError(error, response);
     }
   }
 }

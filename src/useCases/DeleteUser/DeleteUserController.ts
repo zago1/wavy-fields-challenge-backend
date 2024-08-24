@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { DeleteUserUseCase } from "./DeleteUserUseCase";
+import { handleError } from "../../utils";
 
 
 export class DeleteUserController {
@@ -15,7 +16,7 @@ export class DeleteUserController {
 
       return response.sendStatus(200);
     } catch (error) {
-      return response.sendStatus(500);
+      return handleError(error, response);
     }
   }
 }

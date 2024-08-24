@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { UpdateUserPasswordUseCase } from "./UpdateUserPasswordUseCase";
+import { handleError } from "../../utils";
 
 
 export class UpdateUserPasswordController {
@@ -16,7 +17,7 @@ export class UpdateUserPasswordController {
 
       return response.sendStatus(200);
     } catch (error) {
-      return response.sendStatus(500);
+      return handleError(error, response);
     }
   }
 }

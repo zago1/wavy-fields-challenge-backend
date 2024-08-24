@@ -1,6 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import { User } from "../../../entities/User";
 import { IUsersRepository } from "../../IUsersRepository";
+import { EmailAlreadyExistsError } from "../../../utils/errors/EmailAlreadyExistsError";
+import { UserNotFoundError } from "../../../utils/errors/UserNotFoundError";
+import { InvalidPasswordError } from "../../../utils/errors/InvalidPasswordError";
 
 export class PostgresUserRepository implements IUsersRepository {
 
@@ -39,7 +42,7 @@ export class PostgresUserRepository implements IUsersRepository {
 
   async create(name: string, email: string, password: string): Promise<User> {
     if (await this.checkUserEmail(email)) {
-      throw new Error("Email already exists");
+      throw new EmailAlreadyExistsError();
     }
 
     const user = await this.dbClient.user.create({
@@ -62,7 +65,7 @@ export class PostgresUserRepository implements IUsersRepository {
     });
 
     if (!user) {
-      throw new Error("User doesn't exist!");
+      throw new UserNotFoundError();
     }
 
     return this.createNewUser(user.id, user.name, user.email);
@@ -80,7 +83,7 @@ export class PostgresUserRepository implements IUsersRepository {
   async updatePassword(oldPassword: string, newPassword: string, id: string): Promise<void> {
 
     if (!(await this.checkUserPassword(oldPassword, id))) {
-      throw new Error("Invalid password!");
+      throw new InvalidPasswordError();
     }
 
     await this.dbClient.user.update({
