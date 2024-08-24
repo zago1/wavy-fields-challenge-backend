@@ -48,18 +48,9 @@ export class PostgresTaskRepository implements ITasksRepository {
     }
   }
 
-  async updateText(text: string, id: string): Promise<Task> {
+  async update(id: string, text?: string, done?: boolean): Promise<Task> {
     const task = await this.dbClient.task.update({
-      data: { text },
-      where: { id }
-    });
-
-    return task;
-  }
-
-  async updateDone(done: boolean, id: string): Promise<Task> {
-    const task = await this.dbClient.task.update({
-      data: { done },
+      data: { text, done },
       where: { id }
     });
 
