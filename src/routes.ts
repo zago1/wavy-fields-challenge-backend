@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import { createUserController } from "./useCases/CreateUser";
 import { deleteUserController } from "./useCases/DeleteUser";
 import { updateUserNameController } from "./useCases/UpdateUserName";
+import { updateUserPasswordController } from "./useCases/UpdateUserPassword";
 
 const router = Router();
 
@@ -19,6 +20,10 @@ router.delete('/user/:id', (request: Request, response: Response) => {
 
 router.patch('/user/name/:id', (request: Request, response: Response) => {
   return updateUserNameController.handle(request, response);
+});
+
+router.patch('/user/password/:id', (request: Request, response: Response) => {
+  return updateUserPasswordController.handle(request, response);
 });
 
 
