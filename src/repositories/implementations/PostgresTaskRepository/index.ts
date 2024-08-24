@@ -8,6 +8,18 @@ export class PostgresTaskRepository implements ITasksRepository {
     private dbClient: PrismaClient
   ) {}
 
+  private async checkTaskById(id: string): Promise<boolean> {
+    const task = await this.dbClient.task.findFirst({ where: { id } });
+
+    return !!task;
+  }
+
+  private async countAllTasksByUser(userId: string): Promise<number> {
+    const count = await this.dbClient.task.count({ where: { userId } });
+
+    return count;
+  }
+
   async create(text: string, userId: string): Promise<Task> {
     const task = await this.dbClient.task.create({
       data: {
@@ -20,17 +32,44 @@ export class PostgresTaskRepository implements ITasksRepository {
 
     return task;
   }
-  listByUser(userId: string, skip: number, take: number): Promise<IPaginatedResponse<Task[]>> {
-    throw new Error("Method not implemented.");
+
+  async listByUser(userId: string, skip: number, take: number): Promise<IPaginatedResponse<Task[]>> {
+    const tasks = await this.dbClient.task.findMany({
+      where: { userId },
+      skip,
+      take,
+    });
+
+    const totalRegisters = await this.countAllTasksByUser(userId);
+
+    return {
+      metadata: { totalRegisters },
+      data: tasks,
+    }
   }
-  updateText(text: string, id: string): Promise<Task> {
-    throw new Error("Method not implemented.");
+
+  async updateText(text: string, id: string): Promise<Task> {
+    const task = await this.dbClient.task.update({
+      data: { text },
+      where: { id }
+    });
+
+    return task;
   }
-  updateDone(done: boolean, id: string): Promise<Task> {
-    throw new Error("Method not implemented.");
+
+  async updateDone(done: boolean, id: string): Promise<Task> {
+    const task = await this.dbClient.task.update({
+      data: { done },
+      where: { id }
+    });
+
+    return task;
   }
-  delete(id: string): Promise<void> {
-    throw new Error("Method not implemented.");
+
+  async delete(id: string): Promise<void> {
+    if (!( await this.checkTaskById(id) )) { return; }
+
+    await this.dbClient.task.delete({ where: { id } });
   }
   
 }
