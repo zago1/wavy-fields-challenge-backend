@@ -19,9 +19,7 @@ describe('CreateUserUseCase', () => {
   });
 
   it('should return return User', async () => {
-    userRepository.create.mockResolvedValueOnce(
-      new Promise((resolve) => resolve(user))
-    );
+    userRepository.create.mockResolvedValueOnce(user);
 
     const response = await createUserUseCase.execute(user.name, user.email, user.password ?? '');
 
