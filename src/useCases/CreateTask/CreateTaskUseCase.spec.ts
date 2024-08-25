@@ -19,10 +19,8 @@ describe('CreateTaskUseCase', () => {
     createTaskUseCase = new CreateTaskUseCase(taskRepository);
   });
 
-  it('should return return Task', async () => {
-    taskRepository.create.mockResolvedValueOnce(
-      new Promise((resolve) => resolve(task))
-    );
+  it('should return Task', async () => {
+    taskRepository.create.mockResolvedValueOnce(task);
 
     const response = await createTaskUseCase.execute(task.text, task.userId);
 
