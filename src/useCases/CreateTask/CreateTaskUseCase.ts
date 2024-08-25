@@ -6,8 +6,8 @@ export class CreateTaskUseCase {
   ) {}
 
   async execute(text: string, userId: string) {
-    const user = await this.taskRepository.create(text, userId);
+    const task = await this.taskRepository.create(text, userId);
 
-    return user;
+    return task;
   }
 }
