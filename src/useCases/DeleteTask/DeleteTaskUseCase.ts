@@ -6,8 +6,6 @@ export class DeleteTaskUseCase {
   ) {}
 
   async execute(id: string) {
-    const user = await this.taskRepository.delete(id);
-
-    return user;
+    await this.taskRepository.delete(id);
   }
 }
