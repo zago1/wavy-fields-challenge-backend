@@ -38,6 +38,9 @@ export class PostgresTaskRepository implements ITasksRepository {
       where: { userId },
       skip,
       take,
+      orderBy: {
+        createdAt: 'asc'
+      }
     });
 
     const totalRegisters = await this.countAllTasksByUser(userId);
